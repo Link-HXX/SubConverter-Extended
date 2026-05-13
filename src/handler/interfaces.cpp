@@ -1562,7 +1562,10 @@ std::string simpleToClashR(RESPONSE_CALLBACK_ARGS) {
   std::string url = argument.size() <= 8 ? "" : argument.substr(8);
   if (url.empty() || argument.substr(0, 8) != "sublink=") {
     *status_code = 400;
-    return "Invalid request!";
+    return "Invalid request: missing sublink parameter.\n"
+           "无效请求：缺少 sublink 参数。\n"
+           "Please call this endpoint as /sub2clashr?sublink=<subscription-url>.\n"
+           "请使用 /sub2clashr?sublink=<订阅链接> 调用该接口。";
   }
   if (url == "sublink") {
     *status_code = 400;
