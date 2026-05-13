@@ -3,6 +3,7 @@
 #include <cmath>
 #include <iostream>
 #include <numeric>
+#include <unordered_set>
 
 #include "config/regmatch.h"
 #include "generator/config/subexport.h"
@@ -342,11 +343,12 @@ void groupGenerate(const std::string &rule, std::vector<Proxy> &nodelist,
   }
 #endif // NO_JS_RUNTIME
   else {
+    std::unordered_set<std::string> seen(filtered_nodelist.begin(),
+                                         filtered_nodelist.end());
     for (Proxy &x : nodelist) {
       if (applyMatcher(rule, real_rule, x) &&
           (real_rule.empty() || regFind(x.Remark, real_rule)) &&
-          std::find(filtered_nodelist.begin(), filtered_nodelist.end(),
-                    x.Remark) == filtered_nodelist.end())
+          seen.insert(x.Remark).second)
         filtered_nodelist.emplace_back(x.Remark);
     }
   }
