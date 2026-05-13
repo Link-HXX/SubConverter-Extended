@@ -223,7 +223,9 @@ static void on_request(evhttp_request *req, void *args)
         {
             evhttp_add_header(req->output_headers, "WWW-Authenticate", ("Basic realm=\"" + server->auth_realm + "\"").data());
             auto buffer = evhttp_request_get_output_buffer(req);
-            evbuffer_add_printf(buffer, "Unauthorized");
+            std::string return_data = "Unauthorized: missing or invalid credentials.\n"
+                                      "未授权：认证凭据缺失或无效。";
+            evbuffer_add(buffer, return_data.data(), return_data.size());
             evhttp_send_reply(req, 401, nullptr, buffer);
             buffer_cleanup(buffer);
             return;
