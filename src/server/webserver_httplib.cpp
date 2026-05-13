@@ -155,7 +155,9 @@ int WebServer::start_web_server_multi(listener_args *args) {
         res.status = 401;
         res.set_header("WWW-Authenticate",
                        "Basic realm=" + auth_realm + ", charset=\"UTF-8\"");
-        res.set_content("Unauthorized", "text/plain");
+        res.set_content("Unauthorized: missing or invalid credentials.\n"
+                        "未授权：认证凭据缺失或无效。",
+                        "text/plain");
         return httplib::Server::HandlerResponse::Handled;
       }
     }
