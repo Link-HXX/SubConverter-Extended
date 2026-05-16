@@ -260,7 +260,8 @@ wget -O base/pref.toml \
 docker run -d \
   --name SubConverter-Extended \
   -p 25500:25500 \
-  -v /opt/SubConverter-Extended/base/pref.toml:/base/pref.toml \
+  -v ./base/pref.toml:/base/pref.toml:ro \
+  -v ./base/ini:/base/ini \
   --restart unless-stopped \
   aethersailor/subconverter-extended:latest
 ```
@@ -278,11 +279,11 @@ cd /opt/SubConverter-Extended
 
 # 下载 docker-compose 配置文件
 wget -O docker-compose.yml \
-  https://gcore.jsdelivr.net/gh/Aethersailor/SubConverter-Extended@master/docker-compose.yml
+  https://raw.githubusercontent.com/Link-HXX/SubConverter-Extended/refs/heads/master/docker-compose.yml
 
 # 下载配置文件
 wget -O base/pref.toml \
-  https://gcore.jsdelivr.net/gh/Aethersailor/SubConverter-Extended@master/base/pref.example.toml
+  https://raw.githubusercontent.com/Link-HXX/SubConverter-Extended/refs/heads/master/base/pref.toml
 
 # 如需外部访问，请修改 managed_config_prefix 为实际部署地址
 
